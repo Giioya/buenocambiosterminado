@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Image from "next/image";
+import Image from 'next/image';
 import "./globals.css";
 import MiniKitProvider from "@/components/minikit-provider";
+import dynamic from "next/dynamic";
 import NextAuthProvider from "@/components/next-auth-provider";
+import { Network, Tokens } from "@worldcoin/minikit-js";
 import { FaHome, FaInfoCircle, FaHeadset } from "react-icons/fa";
-import carga from "@/public/images/carga_buenocambios.jpg";
-import { ClientErudaProvider } from "@/components/Eruda/ClientErudaProvider"; // Importa el nuevo componente cliente
+import carga from '@/public/images/carga_buenocambios.jpg';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const ErudaProvider = dynamic(
+    () => import("../components/Eruda/").then((c) => c.ErudaProvider),
+    {
+      ssr: false,
+    }
+  );
+
   return (
     <html lang="es">
       <body className={inter.className}>
@@ -30,12 +38,12 @@ export default function RootLayout({
 
         {/* Imagen de carga */}
         <div className="flex justify-center mt-4">
-          <Image
-            src={carga}
-            alt="Carga BuenoCambios"
-            className="carga_bc"
-            width={800}
-            height={600}
+          <Image 
+            src={carga} 
+            alt="Carga BuenoCambios" 
+            className="carga_bc" 
+            width={800} 
+            height={600} 
           />
         </div>
 
@@ -57,13 +65,28 @@ export default function RootLayout({
 
         {/* Proveedores de autenticación y MiniKit */}
         <NextAuthProvider>
-          <ClientErudaProvider> {/* Usamos el componente cliente aquí */}
-            <MiniKitProvider>{children}</MiniKitProvider>
-          </ClientErudaProvider>
+          <ErudaProvider>
+            <MiniKitProvider>
+              {children}
+            </MiniKitProvider>
+          </ErudaProvider>
         </NextAuthProvider>
       </body>
     </html>
   );
 }
 
+// Representa los tokens con los que el usuario puede pagar y la cantidad de cada uno
+export type TokensPayload = {
+  symbol: Tokens;
+  token_amount: string;
+};
+
+export type PayCommandInput = {
+  reference: string;
+  to: string;
+  tokens: TokensPayload[];
+  network?: Network; // Opcional
+  description: string;
+};
 

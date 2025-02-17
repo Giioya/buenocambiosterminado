@@ -3,12 +3,6 @@
 import React from "react";
 
 const Informacion: React.FC = () => {
-    const handleBackClick = () => {
-        if (typeof window !== "undefined") {
-            window.history.back();
-        }
-    };
-
     return (
         <div className="container mx-auto py-10 px-4">
             <div className="bg-white p-6 rounded-2xl shadow-2xl max-w-3xl mx-auto">
@@ -69,9 +63,9 @@ const Informacion: React.FC = () => {
                 </section>
 
                 <button 
-                    onClick={handleBackClick} 
+                    onClick={() => window.history.back()} 
                     className="button-group"
-                >
+                    >
                     Atrás
                 </button>
 
@@ -86,4 +80,3 @@ const Informacion: React.FC = () => {
 };
 
 export default Informacion;
-

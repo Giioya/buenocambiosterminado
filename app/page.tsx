@@ -23,10 +23,7 @@ const redirigirSegunMetodoPago = (
 
   setErrorMessage(null);
 
-  // Solo ejecutamos la redirección en el cliente
-  if (typeof window !== 'undefined') {
-    window.location.href = `/${metodoPago}`;
-  }
+  window.location.href = `/${metodoPago}`;
 };
 
 export default function Home() {
@@ -141,7 +138,6 @@ export default function Home() {
     </div>
   );
 }
-
 
     
   

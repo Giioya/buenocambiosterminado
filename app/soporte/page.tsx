@@ -10,18 +10,6 @@ const Soporte: React.FC = () => {
     const correoLink = `mailto:${correo}`;
     const instagramLink = "https://www.instagram.com/tu_cuenta/";
 
-    const handleWhatsappClick = () => {
-        if (typeof window !== "undefined") {
-            window.open(whatsappLink, "_blank");
-        }
-    };
-
-    const handleCorreoClick = () => {
-        if (typeof window !== "undefined") {
-            window.open(correoLink, "_blank");
-        }
-    };
-
     return (
         <div className="container mx-auto py-10">
             <div className="bg-white p-6 rounded-2xl shadow-2xl max-w-md text-center mx-auto">
@@ -38,13 +26,13 @@ const Soporte: React.FC = () => {
                 <div className="flex flex-col gap-3 w-full">
                     <button
                         className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-300"
-                        onClick={handleWhatsappClick}
+                        onClick={() => window.open(whatsappLink, "_blank")}
                     >
                         <FaWhatsapp /> Contactar por WhatsApp
                     </button>
                     <button
                         className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300"
-                        onClick={handleCorreoClick}
+                        onClick={() => window.open(correoLink, "_blank")}
                     >
                         <FaEnvelope /> Enviar un Correo
                     </button>
@@ -55,5 +43,4 @@ const Soporte: React.FC = () => {
 };
 
 export default Soporte;
-
 
