@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
 
     console.log("Datos recibidos en confirm-payment:", payload);
 
-    const cookieStore = cookies();
+    const cookieStore = await cookies(); // Esperar a que la promesa se resuelva
     const reference = cookieStore.get("payment-nonce")?.value;
 
     console.log("Referencia en la cookie:", reference);
@@ -135,5 +135,6 @@ export async function POST(req: NextRequest) {
         }
     }
 }
+
 
 
